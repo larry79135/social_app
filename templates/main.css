@@ -1,0 +1,29 @@
+html,body{
+    margin: 0px;
+    background: #F2F2F2;
+}
+.box {
+    background: #FFFFFF;
+    padding: 10px;
+    cursor: pointer;
+    transition: all .3s;
+    border-radius: 5px;
+}
+.box:hover {
+    box-shadow: 6px 4px 7px 0 #c8c8c8;
+}
+.header {
+    background: #7828B4;
+    padding: 10px;
+    color: white;
+}
+.item {
+    width: 25%;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+}
+.active {
+    color: #b8d1ff;
+}

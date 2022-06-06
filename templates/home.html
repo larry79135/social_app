@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+</head>
+
+<body>
+    <div class="d-flex header">
+        <div class="item" onclick="loadType('FaceBook',0)"><img src="images/facebook.png" class="mr-3" alt=""> FaceBook
+        </div>
+        <div class="item" onclick="loadType('Instagram',1)"><img src="images/instagram.png" class="mr-3"
+                alt="">Instagram
+        </div>
+        <div class="item" onclick="loadType('Twitter',2)"><img src="images/twitter.png" class="mr-3" alt="">Twitter
+        </div>
+        <div class="item" onclick="loadType('Dcard',3)"><img src="images/blog.png" class="mr-3" alt="">Dcard</div>
+    </div>
+    <div class="container" id="content">
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    loadType('FaceBook', 0);
+    function loadType(type, index) {
+        document.querySelectorAll('.item').forEach(x => {
+            console.log(x)
+            x.classList.remove('active')
+        })
+        document.querySelectorAll('.item')[index].classList.add('active')
+        document.getElementById('content').innerHTML = ''
+
+        $.ajax({
+            url: 'http://127.0.0.1:5000/home?type=' + type,
+            type: 'GET',
+            error: function (xhr) {
+                alert('Ajax request 發生錯誤');
+            },
+            success: function (response) {
+                console.log(response)
+                response.forEach(x => {
+                    var userimg = type == 'Instagram' || type == 'Dcard' ? 'images/user.png' : x.imgurl;
+                    document.getElementById('content').insertAdjacentHTML('beforeEnd',
+                        `
+                    <div class="row mt-3">
+                        <div class="box w-100">
+                            <div class="col-2">
+                                <img style="border-radius:50%;margin-right:10px hideimg" src="${userimg}"> <span>${x.author}</span>
+                            </div>
+                            <div class="col-10">
+                                ${x.content}
+                            </div>
+                        </div>
+                    </div>
+                
+                `);
+                })
+            }
+        });
+
+    }
+
+</script>
